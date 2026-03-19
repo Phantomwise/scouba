@@ -21,6 +21,15 @@ data Card = Card
     }
 
 
+-- Function to identify face cards
+isFace :: Rank -> Bool
+isFace x
+    | x == Jack = True
+    | x == Queen = True
+    | x == King = True
+    | otherwise = False
+
+
 main :: IO ()
 main = do
     putStrLn "Placeholder"
