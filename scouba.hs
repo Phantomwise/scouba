@@ -62,6 +62,29 @@ cardColor :: Card -> AnsiColor
 cardColor x = suitColor (suit x)
 
 
+-- Function to get the value of a card from its rank
+rankValue :: Rank -> Int
+rankValue x
+    | x == Ace = 1
+    | x == Two = 2
+    | x == Three = 3
+    | x == Four = 4
+    | x == Five = 5
+    | x == Six = 6
+    | x == Seven = 7
+    | x == Eight = 8
+    | x == Nine = 9
+    | x == Ten = 10
+    | x == Jack = 8
+    | x == Queen = 9
+    | x == King = 10
+
+
+-- Function to get the value of a card
+cardValue :: Card -> Int
+cardValue x = rankValue (rank x)
+
+
 main :: IO ()
 main = do
     putStrLn "Placeholder"
