@@ -58,6 +58,24 @@ Should automatically create accessor functions:
 
 
 -- ================================================================
+-- DEBUG
+-- ================================================================
+
+
+-- Enable/disable debug messages
+debug :: Bool
+debug = True
+
+
+-- Print debug messages
+printDebug :: String -> IO ()
+printDebug msg =
+    if debug
+        then putStrLn (ansi Magenta ++ "[DEBUG] " ++ ansi Reset ++ msg)
+        else return ()
+
+
+-- ================================================================
 -- CARD PROPERTIES HELPERS
 -- ================================================================
 
@@ -141,8 +159,9 @@ indexDeck deck = zip [1..] deck
 
 mainMenu :: IO ()
 mainMenu = do
-    putStrLn "MAIN MENU"
-    putStrLn "============"
+    putStrLn "======== ======== ======== ========"
+    putStrLn "             MAIN MENU"
+    putStrLn "======== ======== ======== ========"
     putStrLn "n. New Game"
     putStrLn "l. New Game from deck file [DEBUG]"
     putStrLn "s. See stats"
