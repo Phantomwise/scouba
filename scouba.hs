@@ -38,6 +38,7 @@ data Card = Card
     , value :: Int
     }
 
+
 -- Function to identify face cards
 isFace :: Rank -> Bool
 isFace x
