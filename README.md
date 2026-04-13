@@ -33,3 +33,19 @@ Scoring:
 - 1 point: Seven of Diamonds: Scored by the player with the Seven of Diamonds
 - 1 point: Sixes and Sevens: Scored by the player with the most Sixes and Sevens combined
 - 1 point: Diamonds: Scored by the player with the most Diamonds
+
+## TO DO
+
+- Define game state
+- Build a deck in a randomized order from the CSV
+- Implement card draw
+- Implement display of cards on the table
+- Implement display of cards in the hand
+- Implement action choice
+- Implement card capture
+- Implement player turns
+- Implement player hand refill logic
+- Implement table refill logic
+- Implement scoring
+- [LATER] Remove the Value column from the CSV once rankValue is confirmed to work
+
