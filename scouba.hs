@@ -37,6 +37,14 @@ data Card = Card
     , rank :: Rank
     , value :: Int
     }
+{-
+Should automatically create accessor functions:
+    nm    :: Card -> String
+    name  :: Card -> String
+    suit  :: Card -> Suit
+    rank  :: Card -> Rank
+    value :: Card -> Int
+-}
 
 
 -- Function to identify face cards
