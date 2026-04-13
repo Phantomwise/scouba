@@ -48,6 +48,20 @@ isFace x
     | otherwise = False
 
 
+-- Function to assign a color to a suit
+suitColor :: Suit -> AnsiColor
+suitColor x
+    | x == Spades = Blue
+    | x == Hearts = Red
+    | x == Clubs = Cyan
+    | x == Diamonds = Magenta
+    | otherwise = White
+
+-- Function to determine the display color of a card
+cardColor :: Card -> AnsiColor
+cardColor x = suitColor (suit x)
+
+
 main :: IO ()
 main = do
     putStrLn "Placeholder"
