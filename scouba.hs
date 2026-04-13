@@ -124,13 +124,49 @@ shuffledDeck = []
 
 
 -- Function to Shuffle Deck
+-- Pretending to shuffle the deck because it's too complicated for now
 shuffleDeck :: [Card] -> [Card]
-shuffleDeck deck = TBD
+shuffleDeck deck = deck
 
 
 -- Function to index the shuffled deck
 indexDeck :: [Card] -> [(Int,Card)]
 indexDeck deck = zip [1..] deck
+
+
+-- ================================================================
+-- MENU
+-- ================================================================
+
+
+mainMenu :: IO ()
+mainMenu = do
+    putStrLn "MAIN MENU"
+    putStrLn "============"
+    putStrLn "n. New Game"
+    putStrLn "l. New Game from deck file [DEBUG]"
+    putStrLn "s. See stats"
+    putStrLn "d. Reset stats"
+    putStrLn "q. Quit"
+    k <- getChar
+    _ <- getLine
+    case k of
+        'n' -> do
+            putStrLn "To be implemented"
+            -- newGame
+        'l' -> do
+            putStrLn "To be implemented"
+            -- loadGame
+        's' -> do
+            putStrLn "To be implemented"
+            -- seeStats
+        'd' -> do
+            putStrLn "To be implemented"
+            -- deleteStats
+        'q' -> do
+            putStrLn "Goodbye!"
+        _ -> do
+            mainMenu
 
 
 -- ================================================================
@@ -140,7 +176,7 @@ indexDeck deck = zip [1..] deck
 
 main :: IO ()
 main = do
-    putStrLn "Placeholder"
+    mainMenu
 
 
 -- ================================================================
