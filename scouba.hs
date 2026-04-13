@@ -1,11 +1,20 @@
+-- ================================================================
+-- IMPORTS
+-- ================================================================
+
+
 -- Import CSV module
 import Data.Csv
+
+
+-- ================================================================
+-- DATA TYPES
+-- ================================================================
 
 
 -- Define a data type for colors
 data AnsiColor = Black | Red | Green | Yellow | Blue | Magenta | Cyan | White | Reset
     deriving (Eq, Enum, Show)
-
 
 -- Map to ANSI color codes
 ansi :: AnsiColor -> String
@@ -23,6 +32,7 @@ ansi Reset   = "\x1b[0m"
 -- Define data type for card suit
 data Suit = Spades | Hearts | Clubs | Diamonds
     deriving (Eq, Enum, Show)
+
 
 -- Define data type for card rank
 data Rank = Ace | Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | Jack | Queen | King
@@ -45,6 +55,11 @@ Should automatically create accessor functions:
     rank  :: Card -> Rank
     value :: Card -> Int
 -}
+
+
+-- ================================================================
+-- CARD PROPERTIES HELPERS
+-- ================================================================
 
 
 -- Function to identify face cards
@@ -93,6 +108,11 @@ cardValue :: Card -> Int
 cardValue x = rankValue (rank x)
 
 
+-- ================================================================
+-- DECK HELPERS
+-- ================================================================
+
+
 -- Ordered Deck
 orderedDeck :: [(i,Card)]
 orderedDeck = []
@@ -113,6 +133,14 @@ indexDeck :: [Card] -> [(Int,Card)]
 indexDeck deck = zip [1..] deck
 
 
+-- ================================================================
+-- MAIN
+-- ================================================================
+
+
 main :: IO ()
 main = do
     putStrLn "Placeholder"
+
+
+-- ================================================================
