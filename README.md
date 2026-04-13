@@ -7,8 +7,8 @@ Learned from my grandmother ❤️
 
 ## Rules
 
-- Each player gets 4 cards in their hand
-- Four cards are placed face up on the table
+- Each player gets 5 cards in their hand
+- 5 cards are placed face up on the table
 - Face cards: Jack, Queen, King
 - Pip cards: 1 to 10
 - During their turn, a player can do one action among the following:
@@ -21,11 +21,9 @@ Learned from my grandmother ❤️
 	- Place one card on the table if they can't capture anything
 - Each player plays one card in turn, until they are both out of cards
 - When both players run out of cards, their hand is refilled
-- ??? If a player captures the last card on the table, they score a Scouba, and four more cards are placed on the table
+- If there are no more cards on the table because the previous player did a Scouba, then the next player is forced to discard a card to the table since there are no cards to capture
 - The game continues until the deck has run out of cards
-	- If the deck runs out of cards while refilling the table, then the table is filled with whatever cards are there even though it's less than four cards
-	- If the deck runs out of cards while refilling the players' hands, and there are enough cards for each player to get the same number of cards even though it's less than a full hand, then the players get that number of cards
-	- If the deck runs out of cards while refilling the players' hands, and there are not enough cards for each players to get the same number of cards (odd number), then the players get as many cards as is possible and the extra card goes face up on the table
+	- If there are not enough cards to completely refill the hand of the players, then the hands are refilled equally until there are no more cards, or not enough cards to refill equally. Any cards left over go to the table (won't happen with 2 players).
 
 Scoring:
 - 1 point: Scouba: Each time a player captures the last card on the table, they score one
@@ -48,4 +46,3 @@ Scoring:
 - Implement table refill logic
 - Implement scoring
 - [LATER] Remove the Value column from the CSV once rankValue is confirmed to work
-
