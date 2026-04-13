@@ -93,6 +93,26 @@ cardValue :: Card -> Int
 cardValue x = rankValue (rank x)
 
 
+-- Ordered Deck
+orderedDeck :: [(i,Card)]
+orderedDeck = []
+
+
+-- Shuffled Deck
+shuffledDeck :: [(i,Card)]
+shuffledDeck = []
+
+
+-- Function to Shuffle Deck
+shuffleDeck :: [Card] -> [Card]
+shuffleDeck deck = TBD
+
+
+-- Function to index the shuffled deck
+indexDeck :: [Card] -> [(Int,Card)]
+indexDeck deck = zip [1..] deck
+
+
 main :: IO ()
 main = do
     putStrLn "Placeholder"
