@@ -7,7 +7,7 @@ data Suit = Spades | Hearts | Clubs | Diamonds
     deriving (Eq, Enum, Show)
 
 -- Define data type for card rank
-data Rank = One | Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | Jack | Queen | King
+data Rank = Ace | Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | Jack | Queen | King
     deriving (Eq, Enum, Ord, Bounded, Show)
 
 
@@ -19,7 +19,6 @@ data Card = Card
     , rank :: Rank
     , value :: Int
     }
-
 
 -- Function to identify face cards
 isFace :: Rank -> Bool
