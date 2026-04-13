@@ -34,15 +34,15 @@ Scoring:
 
 ## TO DO
 
-- Define game state
-- Build a deck in a randomized order from the CSV
-- Implement card draw
-- Implement display of cards on the table
-- Implement display of cards in the hand
-- Implement action choice
-- Implement card capture
-- Implement player turns
-- Implement player hand refill logic
-- Implement table refill logic
-- Implement scoring
+- [ ] Define game state
+- [ ] Build a deck in a randomized order from the CSV
+- [ ] Implement card draw
+- [ ] Implement display of cards on the table
+- [ ] Implement display of cards in the hand
+- [ ] Implement action choice
+- [ ] Implement card capture
+- [ ] Implement player turns
+- [ ] Implement player hand refill logic
+- [ ] Implement table refill logic
+- [ ] Implement scoring
 - [LATER] Remove the Value column from the CSV once rankValue is confirmed to work
