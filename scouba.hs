@@ -21,18 +21,35 @@ import System.Exit (ExitCode(..), exitWith, exitSuccess)
 data ExitStatus
     = Success
     | GeneralError
-    | FileNotFound
+    | FileNotFound FilePath
     | ParseError
     | UnknownError
     deriving (Show, Eq)
 
 -- Map ExitStatus to Exit Codes
-exitGame :: ExitStatus -> IO a
-exitGame Success      = exitWith (ExitSuccess) -- Not using exitSuccess because aligned code makes me happy
-exitGame GeneralError = exitWith (ExitFailure 1)
-exitGame FileNotFound = exitWith (ExitFailure 2)
-exitGame ParseError   = exitWith (ExitFailure 3)
-exitGame UnknownError = exitWith (ExitFailure 9)
+statusCode :: ExitStatus -> IO ()
+statusCode  Success         = exitWith (ExitSuccess) -- Not using exitSuccess because aligned code makes me happy
+statusCode  GeneralError    = exitWith (ExitFailure 1)
+statusCode (FileNotFound _) = exitWith (ExitFailure 2)
+statusCode  ParseError      = exitWith (ExitFailure 3)
+statusCode  UnknownError    = exitWith (ExitFailure 9)
+
+-- Print an exit message
+exitMessage :: ExitStatus -> String
+exitMessage  Success            = ("Exiting")
+exitMessage  GeneralError       = ("General error")
+exitMessage (FileNotFound path) = ("File not found: " ++ path)
+exitMessage  ParseError         = ("Parsing error")
+exitMessage  UnknownError       = ("Unknown error")
+
+-- Exit with specific status
+exitGame :: ExitStatus -> IO ()
+exitGame Success = do
+    putStrLn (exitMessage Success)
+    statusCode UnknownError
+exitGame status = do
+    printError (exitMessage status)
+    statusCode UnknownError
 -- Not yet in use
 
 
