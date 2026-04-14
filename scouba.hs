@@ -70,6 +70,11 @@ debug :: Bool
 debug = True
 
 
+-- Deck File Path
+deckFilePath :: FilePath
+deckFilePath = "scouba_deck.csv"
+
+
 -- Number of players
 playersCount :: Int
 playersCount = 2
@@ -166,10 +171,6 @@ cardValue x = rankValue (rank x)
 -- DECK HELPERS
 -- ================================================================
 
-
--- Deck File Path
-deckFilePath :: FilePath
-deckFilePath = "scouba_deck.csv"
 
 -- Create Deck
 createDeck :: IO String -- Change to `IO [(i,Card)` later when extraction works, or maybe `{...}` if it's a list of records? check later]
