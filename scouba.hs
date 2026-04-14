@@ -8,10 +8,32 @@ import Data.Csv
 -- Import module to check if files exists
 import System.Directory (doesFileExist)
 
+-- Import module for not crashing
+import System.Exit (ExitCode(..), exitWith, exitSuccess)
+
 
 -- ================================================================
 -- DATA TYPES
 -- ================================================================
+
+
+-- Define a data type for exit statuses
+data ExitStatus
+    = Success
+    | GeneralError
+    | FileNotFound
+    | ParseError
+    | UnknownError
+    deriving (Show, Eq)
+
+-- Map ExitStatus to Exit Codes
+exitGame :: ExitStatus -> IO a
+exitGame Success      = exitWith (ExitSuccess) -- Not using exitSuccess because aligned code makes me happy
+exitGame GeneralError = exitWith (ExitFailure 1)
+exitGame FileNotFound = exitWith (ExitFailure 2)
+exitGame ParseError   = exitWith (ExitFailure 3)
+exitGame UnknownError = exitWith (ExitFailure 9)
+-- Not yet in use
 
 
 -- Define a data type for colors
