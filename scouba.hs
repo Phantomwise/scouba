@@ -57,6 +57,7 @@ Should automatically create accessor functions:
     rank  :: Card -> Rank
     value :: Card -> Int
 -}
+-- Not yet in use
 
 
 -- ================================================================
@@ -72,16 +73,19 @@ debug = True
 -- Number of players
 playersCount :: Int
 playersCount = 2
+-- Not yet in use
 
 
 -- Number of cards in the hand
 handSize :: Int
 handSize = 5
+-- Not yet in use
 
 
 -- Number of cards on the table
 tableSize :: Int
 tableSize = 4
+-- Not yet in use
 
 
 -- ================================================================
@@ -115,6 +119,7 @@ isFace x
     | x == Queen = True
     | x == King = True
     | otherwise = False
+-- Not yet in use
 
 
 -- Function to assign a color to a suit
@@ -126,9 +131,11 @@ suitColor x
     | x == Diamonds = Magenta
     | otherwise = White
 
+
 -- Function to determine the display color of a card
 cardColor :: Card -> AnsiColor
 cardColor x = suitColor (suit x)
+-- Not yet in use
 
 
 -- Function to get the value of a card from its rank
@@ -152,6 +159,7 @@ rankValue x
 -- Function to get the value of a card
 cardValue :: Card -> Int
 cardValue x = rankValue (rank x)
+-- Not yet in use
 
 
 -- ================================================================
@@ -207,22 +215,26 @@ printDeck deckFile = do
 -- Ordered Deck
 orderedDeck :: [(i,Card)]
 orderedDeck = []
+-- Not yet in use
 
 
 -- Shuffled Deck
 shuffledDeck :: [(i,Card)]
 shuffledDeck = []
+-- Not yet in use
 
 
 -- Function to Shuffle Deck
 -- Pretending to shuffle the deck because it's too complicated for now
 shuffleDeck :: [Card] -> [Card]
 shuffleDeck deck = deck
+-- Not yet in use
 
 
 -- Function to index the shuffled deck
 indexDeck :: [Card] -> [(Int,Card)]
 indexDeck deck = zip [1..] deck
+-- Not yet in use
 
 
 -- ================================================================
