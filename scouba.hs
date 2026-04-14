@@ -57,14 +57,35 @@ Should automatically create accessor functions:
 -}
 
 
+
 -- ================================================================
--- DEBUG
+-- CONSTANTS
 -- ================================================================
 
 
 -- Enable/disable debug messages
 debug :: Bool
 debug = True
+
+
+-- Number of players
+playersCount :: Int
+playersCount = 2
+
+
+-- Number of cards in the hand
+handSize :: Int
+handSize = 5
+
+
+-- Number of cards on the table
+tableSize :: Int
+tableSize = 4
+
+
+-- ================================================================
+-- DEBUG
+-- ================================================================
 
 
 -- Print debug messages
