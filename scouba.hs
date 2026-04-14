@@ -5,6 +5,8 @@
 
 -- Import CSV module
 import Data.Csv
+-- Import module to check if files exists
+import System.Directory (doesFileExist)
 
 
 -- ================================================================
@@ -157,6 +159,51 @@ cardValue x = rankValue (rank x)
 -- ================================================================
 
 
+-- Deck File Path
+deckFilePath :: FilePath
+deckFilePath = "scouba_deck.csv"
+
+-- Create Deck
+createDeck :: IO String -- Change to `IO [(i,Card)` later when extraction works, or maybe `{...}` if it's a list of records? check later]
+createDeck = do
+    checkDeckFile deckFilePath -- IO () : succeeds or crashes
+    rawDeck <- readDeckFile deckFilePath -- String <- IO String
+    deck <- parseDeckFile rawDeck -- String <- IO String
+    return deck -- Wraps String in IO, returns IO String
+
+-- 1. Check Deck File
+checkDeckFile :: FilePath -> IO () -- Change to `IO [(i,Card)` later when extraction works, or maybe `{...}` if it's a list of records? check later]
+checkDeckFile deckFile = do
+    putStrLn ("Checking for a deck file")
+    deckFileExists :: Bool <- doesFileExist deckFile -- Bool <- IO Bool
+    if deckFileExists == True
+        then do
+            printDebug ("Deck file found at " ++ deckFile) -- IO ()
+        else do
+            printDebug ("Deck file not found at " ++ deckFile) -- IO ()
+            error "Cannot continue without deck file" -- Crashes program, never returns
+
+-- 2. Read Deck File
+readDeckFile :: FilePath -> IO String
+readDeckFile deckFile = do
+    rawDeck <- readFile deckFile -- String <- IO String
+    printDebug ("Raw Deck: \n" ++ rawDeck) -- IO ()
+    return rawDeck -- Wraps String in IO, returns IO String
+
+-- 3. Parse Deck
+parseDeckFile :: String -> IO String
+parseDeckFile rawDeck = do
+    let deck = "To be implemented" -- String
+    return deck -- Wraps String in IO, returns IO String
+
+
+{-
+-- Print deck CSV file
+printDeck :: IO ()
+printDeck deckFile = do
+    rawDeck <- 
+-}
+
 -- Ordered Deck
 orderedDeck :: [(i,Card)]
 orderedDeck = []
@@ -197,8 +244,12 @@ mainMenu = do
     _ <- getLine
     case k of
         'n' -> do
-            putStrLn "To be implemented"
-            -- newGame
+            _ <- createDeck -- Temporary
+            return ()
+            -- Later do:
+            -- orderedDeck <- createDeck
+            -- shuffledDeck <- shuffleDeck orderedDeck
+            -- startGame shuffledDeck
         'l' -> do
             putStrLn "To be implemented"
             -- loadGame
