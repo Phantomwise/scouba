@@ -229,7 +229,7 @@ checkDeckFile deckFile = do
             printDebug ("Deck file found at " ++ deckFile) -- IO ()
         else do
             printDebug ("Deck file not found at " ++ deckFile) -- IO ()
-            error "Cannot continue without deck file" -- Crashes program, never returns
+            exitGame (FileNotFound deckFile)
 
 -- 2. Read Deck File
 readDeckFile :: FilePath -> IO String
@@ -312,7 +312,7 @@ mainMenu = do
             putStrLn "To be implemented"
             -- deleteStats
         'q' -> do
-            putStrLn "Goodbye!"
+            exitGame Success
         _ -> do
             mainMenu
 
