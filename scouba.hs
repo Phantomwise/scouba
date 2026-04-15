@@ -17,6 +17,11 @@ import Data.Csv
 -- haskellPackages.cassava
 -- Not yet in use
 
+import qualified Data.ByteString.Lazy
+-- Needed by cassava to read CSV
+-- TODO: find out what the hell lazy bytestrings are
+-- Not yet in use
+
 
 -- ================================================================
 -- CONFIGURATION
