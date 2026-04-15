@@ -3,13 +3,19 @@
 -- ================================================================
 
 
--- Import CSV module
-import Data.Csv
--- Import module to check if files exists
 import System.Directory (doesFileExist)
+-- Needed to check if files exist
+-- base
 
--- Import module for not crashing
 import System.Exit (ExitCode(..), exitWith, exitSuccess)
+-- Needed to exit cleanly with an exit code
+-- base
+
+import Data.Csv
+-- Cassava module
+-- Needed to parse CSV data
+-- haskellPackages.cassava
+-- Not yet in use
 
 
 -- ================================================================
