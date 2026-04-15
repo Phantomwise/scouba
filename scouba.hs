@@ -304,12 +304,15 @@ mainMenu = do
             -- startGame shuffledDeck
         'l' -> do
             putStrLn "To be implemented"
+            mainMenu
             -- loadGame
         's' -> do
             putStrLn "To be implemented"
+            mainMenu
             -- seeStats
         'd' -> do
             putStrLn "To be implemented"
+            mainMenu
             -- deleteStats
         'q' -> do
             exitGame Success
