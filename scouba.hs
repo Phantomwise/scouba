@@ -13,7 +13,76 @@ import System.Exit (ExitCode(..), exitWith, exitSuccess)
 
 
 -- ================================================================
--- DATA TYPES
+-- CONFIGURATION
+-- ================================================================
+
+
+-- Enable/disable debug messages
+debug :: Bool
+debug = True
+
+
+-- Deck File Path
+deckFilePath :: FilePath
+deckFilePath = "scouba_deck.csv"
+
+
+-- Number of players
+playersCount :: Int
+playersCount = 2
+-- Not yet in use
+
+
+-- Number of cards in the hand
+handSize :: Int
+handSize = 5
+-- Not yet in use
+
+
+-- Number of cards on the table
+tableSize :: Int
+tableSize = 4
+-- Not yet in use
+
+
+-- ================================================================
+-- COLOR AND DISPLAY
+-- ================================================================
+
+
+-- Define a data type for colors
+data AnsiColor = Black | Red | Green | Yellow | Blue | Magenta | Cyan | White | Reset
+    deriving (Eq, Enum, Show)
+
+-- Map to ANSI color codes
+ansi :: AnsiColor -> String
+ansi Black   = "\x1b[30m"
+ansi Red     = "\x1b[31m"
+ansi Green   = "\x1b[32m"
+ansi Yellow  = "\x1b[33m"
+ansi Blue    = "\x1b[34m"
+ansi Magenta = "\x1b[35m"
+ansi Cyan    = "\x1b[36m"
+ansi White   = "\x1b[37m"
+ansi Reset   = "\x1b[0m"
+
+
+-- Print debug messages
+printDebug :: String -> IO ()
+printDebug msg =
+    if debug
+        then putStrLn (ansi Magenta ++ "[DEBUG] " ++ ansi Reset ++ msg)
+        else return ()
+
+
+-- Print error messages
+printError :: String -> IO ()
+printError msg =
+    putStrLn (ansi Red ++ "[ERROR] " ++ ansi Reset ++ msg)
+
+
+-- ================================================================
+-- EXIT HANDLING
 -- ================================================================
 
 
@@ -53,21 +122,9 @@ exitGame status = do
 -- Not yet in use
 
 
--- Define a data type for colors
-data AnsiColor = Black | Red | Green | Yellow | Blue | Magenta | Cyan | White | Reset
-    deriving (Eq, Enum, Show)
-
--- Map to ANSI color codes
-ansi :: AnsiColor -> String
-ansi Black   = "\x1b[30m"
-ansi Red     = "\x1b[31m"
-ansi Green   = "\x1b[32m"
-ansi Yellow  = "\x1b[33m"
-ansi Blue    = "\x1b[34m"
-ansi Magenta = "\x1b[35m"
-ansi Cyan    = "\x1b[36m"
-ansi White   = "\x1b[37m"
-ansi Reset   = "\x1b[0m"
+-- ================================================================
+-- CARDS
+-- ================================================================
 
 
 -- Define data type for card suit
@@ -97,63 +154,6 @@ Should automatically create accessor functions:
     value :: Card -> Int
 -}
 -- Not yet in use
-
-
--- ================================================================
--- CONSTANTS
--- ================================================================
-
-
--- Enable/disable debug messages
-debug :: Bool
-debug = True
-
-
--- Deck File Path
-deckFilePath :: FilePath
-deckFilePath = "scouba_deck.csv"
-
-
--- Number of players
-playersCount :: Int
-playersCount = 2
--- Not yet in use
-
-
--- Number of cards in the hand
-handSize :: Int
-handSize = 5
--- Not yet in use
-
-
--- Number of cards on the table
-tableSize :: Int
-tableSize = 4
--- Not yet in use
-
-
--- ================================================================
--- MESSAGES
--- ================================================================
-
-
--- Print debug messages
-printDebug :: String -> IO ()
-printDebug msg =
-    if debug
-        then putStrLn (ansi Magenta ++ "[DEBUG] " ++ ansi Reset ++ msg)
-        else return ()
-
-
--- Print error messages
-printError :: String -> IO ()
-printError msg =
-    putStrLn (ansi Red ++ "[ERROR] " ++ ansi Reset ++ msg)
-
-
--- ================================================================
--- CARD PROPERTIES HELPERS
--- ================================================================
 
 
 -- Function to identify face cards
