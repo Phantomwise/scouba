@@ -17,10 +17,9 @@ import Data.Csv
 -- haskellPackages.cassava
 -- Not yet in use
 
-import qualified Data.ByteString.Lazy
+import qualified Data.ByteString.Lazy as BL
 -- Needed by cassava to read CSV
 -- TODO: find out what the hell lazy bytestrings are
--- Not yet in use
 
 
 -- ================================================================
@@ -226,8 +225,9 @@ cardValue x = rankValue (rank x)
 createDeck :: IO String -- Change to `IO [(i,Card)` later when extraction works, or maybe `{...}` if it's a list of records? check later]
 createDeck = do
     checkDeckFile deckFilePath -- IO () : succeeds or crashes
-    rawDeck <- readDeckFile deckFilePath -- String <- IO String
-    deck <- parseDeckFile rawDeck -- String <- IO String
+    rawDeck <- readDeckFileString deckFilePath -- String <- IO String
+    bytestringDeck <- readDeckFileBytestring deckFilePath -- BL.ByteString <- IO BL.ByteString
+    deck <- parseDeckFile bytestringDeck -- String <- IO String
     return deck -- Wraps String in IO, returns IO String
 
 -- 1. Check Deck File
@@ -242,16 +242,24 @@ checkDeckFile deckFile = do
             printDebug ("Deck file not found at " ++ deckFile) -- IO ()
             exitGame (FileNotFound deckFile)
 
--- 2. Read Deck File
-readDeckFile :: FilePath -> IO String
-readDeckFile deckFile = do
+-- 2. Read Deck File (String), to remove later
+readDeckFileString :: FilePath -> IO String
+readDeckFileString deckFile = do
     rawDeck <- readFile deckFile -- String <- IO String
     printDebug ("Raw Deck: \n" ++ rawDeck) -- IO ()
     return rawDeck -- Wraps String in IO, returns IO String
 
--- 3. Parse Deck
-parseDeckFile :: String -> IO String
-parseDeckFile rawDeck = do
+-- 3. Read Deck File (ByteString)
+readDeckFileBytestring :: FilePath -> IO BL.ByteString
+readDeckFileBytestring deckFile = do
+    bytestringDeck <- BL.readFile deckFile -- BL.ByteString <- IO BL.ByteString
+    print bytestringDeck -- IO ()
+--    printDebug bytestringDeck -- IO ()
+    return bytestringDeck -- Wraps String in IO, returns IO String
+
+-- 4. Parse Deck
+parseDeckFile :: BL.ByteString -> IO String
+parseDeckFile bytestringDeck = do
     let deck = "To be implemented" -- String
     return deck -- Wraps String in IO, returns IO String
 
