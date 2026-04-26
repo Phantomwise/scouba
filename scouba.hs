@@ -21,6 +21,9 @@ import qualified Data.ByteString.Lazy as BL
 -- Needed by cassava to read CSV
 -- TODO: find out what the hell lazy bytestrings are
 
+import qualified Data.ByteString.Lazy.Char8 as BLC
+-- Needed by BLC.unpack to convert a ByteString into a String
+
 
 -- ================================================================
 -- CONFIGURATION
@@ -253,8 +256,10 @@ readDeckFileString deckFile = do
 readDeckFileBytestring :: FilePath -> IO BL.ByteString
 readDeckFileBytestring deckFile = do
     bytestringDeck <- BL.readFile deckFile -- BL.ByteString <- IO BL.ByteString
+    printDebug ("ByteString Deck:") -- IO ()
     print bytestringDeck -- IO ()
---    printDebug bytestringDeck -- IO ()
+    printDebug ("ByteString Deck unpacked:") -- IO ()
+    putStrLn (BLC.unpack bytestringDeck) -- IO ()
     return bytestringDeck -- Wraps String in IO, returns IO String
 
 -- 4. Parse Deck
