@@ -150,6 +150,15 @@ data Rank = Ace | Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten |
     deriving (Eq, Enum, Ord, Bounded, Show)
 
 
+-- Make a record for cards using only strings (Temporary)
+data CardStr = CardStr
+    { nmStr :: String
+    , nameStr :: String
+    , suitStr :: String -- Change to Suit later
+    , rankStr :: String -- Change to Rank later
+    , valueStr :: String -- Change to Int later
+    }
+
 -- Make a record for cards
 data Card = Card
     { nm :: String
@@ -158,6 +167,7 @@ data Card = Card
     , rank :: Rank
     , value :: Int
     }
+
 {-
 Should automatically create accessor functions:
     nm    :: Card -> String
