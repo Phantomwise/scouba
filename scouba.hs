@@ -258,7 +258,7 @@ readDeckFileBytestring :: FilePath -> IO BL.ByteString
 readDeckFileBytestring deckFile = do
     bytestringDeck <- BL.readFile deckFile -- BL.ByteString <- IO BL.ByteString
     printDebug ("ByteString Deck:") -- IO ()
-    print bytestringDeck -- IO ()
+    putStrLn (show bytestringDeck) -- IO ()
     printDebug ("ByteString Deck unpacked:") -- IO ()
     putStrLn (BLC.unpack bytestringDeck) -- IO ()
     return bytestringDeck -- Wraps String in IO, returns IO String
