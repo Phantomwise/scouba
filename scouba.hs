@@ -249,7 +249,8 @@ checkDeckFile deckFile = do
 readDeckFileString :: FilePath -> IO String
 readDeckFileString deckFile = do
     rawDeck <- readFile deckFile -- String <- IO String
-    printDebug ("Raw Deck: \n" ++ rawDeck) -- IO ()
+    printDebug ("Raw Deck:") -- IO ()
+    putStrLn (rawDeck) -- IO ()
     return rawDeck -- Wraps String in IO, returns IO String
 
 -- 3. Read Deck File (ByteString)
