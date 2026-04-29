@@ -370,6 +370,53 @@ filterDeckEmptyRows xs = [x | x <- xs, not (null x)]
 -- validateDeck :: [[B8.ByteString]]
 -- validateDeck deckB8List
 
+
+convertNm :: B8.ByteString -> Either String String -- Change it to Either String Text later
+convertNm bs
+    | s == "" = Left ("Invalid Nm field:" ++ B8.unpack bs)
+    | otherwise = Right s
+    where s = B8.unpack bs
+
+convertName :: B8.ByteString -> Either String String -- Change it to Either String Text later
+convertName bs
+    | s == "" = Left ("Invalid Name field:" ++ B8.unpack bs)
+    | otherwise = Right s
+    where s = B8.unpack bs
+
+convertValue :: B8.ByteString -> Either String Int
+convertValue bs =
+    case reads (B8.unpack bs) :: [(Int, String)] of
+        [(n,"")] -> Right n
+        _        -> Left ("Invalid Value field:" ++ B8.unpack bs)
+
+convertSuit :: B8.ByteString -> Either String Suit
+convertSuit bs
+    | s == "Spades" = Right Spades
+    | s == "Hearts" = Right Hearts
+    | s == "Clubs" = Right Clubs
+    | s == "Diamonds" = Right Diamonds
+    | otherwise = Left ("Invalid suit:" ++ B8.unpack bs)
+    where s = B8.unpack bs
+
+convertRank :: B8.ByteString -> Either String Rank
+convertRank bs
+    | s == "Ace" = Right Ace
+    | s == "Two" = Right Two
+    | s == "Three" = Right Three
+    | s == "Four" = Right Four
+    | s == "Five" = Right Five
+    | s == "Six" = Right Six
+    | s == "Seven" = Right Seven
+    | s == "Eight" = Right Eight
+    | s == "Nine" = Right Nine
+    | s == "Ten" = Right Ten
+    | s == "Jack" = Right Jack
+    | s == "Queen" = Right Queen
+    | s == "King" = Right King
+    | otherwise = Left ("Invalid suit:" ++ B8.unpack bs)
+    where s = B8.unpack bs
+
+
 {-
 -- Print deck CSV file
 printDeck :: IO ()
