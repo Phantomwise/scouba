@@ -16,13 +16,20 @@ import Data.Csv
 -- Needed to parse CSV data
 -- haskellPackages.cassava
 -- Not yet in use
+-- TODO: REMOVE
 
 import qualified Data.ByteString.Lazy as BL
 -- Needed by cassava to read CSV
 -- TODO: find out what the hell lazy bytestrings are
+-- TODO: REMOVE
 
 import qualified Data.ByteString.Lazy.Char8 as BLC
 -- Needed by BLC.unpack to convert a ByteString into a String
+-- TODO: REMOVE
+
+import qualified Data.ByteString.Char8 as B8
+-- Needed to implement manual parsing and preserve my sanity from Cassava
+-- Char8 allows using `,` and `\n` instead of the byte sequences `44` and `10`
 
 
 -- ================================================================
@@ -149,16 +156,6 @@ data Suit = Spades | Hearts | Clubs | Diamonds
 data Rank = Ace | Two | Three | Four | Five | Six | Seven | Eight | Nine | Ten | Jack | Queen | King
     deriving (Eq, Enum, Ord, Bounded, Show)
 
-
--- Make a record for cards using only strings (Temporary)
-data CardStr = CardStr
-    { nmStr :: String
-    , nameStr :: String
-    , suitStr :: String -- Change to Suit later
-    , rankStr :: String -- Change to Rank later
-    , valueStr :: String -- Change to Int later
-    }
-
 -- Make a record for cards
 data Card = Card
     { nm :: String
@@ -233,14 +230,15 @@ cardValue x = rankValue (rank x)
 -- DECK HELPERS
 -- ================================================================
 
-
+{--
 -- Create Deck
 createDeck :: IO String -- Change to `IO [(i,Card)` later when extraction works, or maybe `{...}` if it's a list of records? check later]
 createDeck = do
     checkDeckFile deckFilePath -- IO () : succeeds or crashes
-    rawDeck <- readDeckFileString deckFilePath -- String <- IO String
-    bytestringDeck <- readDeckFileBytestring deckFilePath -- BL.ByteString <- IO BL.ByteString
-    deck <- parseDeckFile bytestringDeck -- String <- IO String
+    deckRaw <- readDeckFileString deckFilePath -- String <- IO String
+    deckB8 <- readDeckFileBytestring deckFilePath -- BL.ByteString <- IO BL.ByteString
+    deck <- parseDeckFile deckB8 -- String <- IO String
+    parsedDeck <- parseDeckFileManually deckRaw -- String <- ???
     return deck -- Wraps String in IO, returns IO String
 
 -- 1. Check Deck File
@@ -255,36 +253,128 @@ checkDeckFile deckFile = do
             printDebug ("Deck file not found at " ++ deckFile) -- IO ()
             exitGame (FileNotFound deckFile)
 
--- 2. Read Deck File (String), to remove later
+-- 2.A. Read Deck File (String), to remove later
 readDeckFileString :: FilePath -> IO String
 readDeckFileString deckFile = do
-    rawDeck <- readFile deckFile -- String <- IO String
+    deckRaw <- readFile deckFile -- String <- IO String
     printDebug ("Raw Deck:") -- IO ()
-    putStrLn (rawDeck) -- IO ()
-    return rawDeck -- Wraps String in IO, returns IO String
+    putStrLn (deckRaw) -- IO ()
+    return deckRaw -- Wraps String in IO, returns IO String
 
--- 3. Read Deck File (ByteString)
+-- 2.B Read Deck File (ByteString)
 readDeckFileBytestring :: FilePath -> IO BL.ByteString
 readDeckFileBytestring deckFile = do
-    bytestringDeck <- BL.readFile deckFile -- BL.ByteString <- IO BL.ByteString
+    deckB8 <- BL.readFile deckFile -- BL.ByteString <- IO BL.ByteString
     printDebug ("ByteString Deck:") -- IO ()
-    putStrLn (show bytestringDeck) -- IO ()
+    putStrLn (show deckB8) -- IO ()
     printDebug ("ByteString Deck unpacked:") -- IO ()
-    putStrLn (BLC.unpack bytestringDeck) -- IO ()
-    return bytestringDeck -- Wraps String in IO, returns IO String
+    putStrLn (BLC.unpack deckB8) -- IO ()
+    return deckB8 -- Wraps String in IO, returns IO String
 
--- 4. Parse Deck
+-- 3.A. Parse Deck with Cassava (gave up for now)
 parseDeckFile :: BL.ByteString -> IO String
-parseDeckFile bytestringDeck = do
+parseDeckFile deckB8 = do
     let deck = "To be implemented" -- String
     return deck -- Wraps String in IO, returns IO String
 
+-- 3.B. Parse Deck without Cassava
+-- Went on a tangent and forgot what I was doing, starting again in another block
+parseDeckFileManually :: String -> IO String
+parseDeckFileManually deckRaw = do
+    printDebug ("Raw Deck:") -- IO ()
+    putStrLn (deckRaw) -- IO ()
+    -- Split the deck into a list of strings line by line
+    let deckRawList = lines deckRaw
+    printDebug ("Raw Deck List:") -- IO ()
+    print deckRawList
+    -- Filter out all the empty lines
+    let deckRawList2 = [x | x <- deckRawList, not (null x)] -- Unnecessary, ending newline already removed by lines, keeping it fore future-proofing
+    printDebug ("Raw Deck List 2 (Filtered for null):") -- IO ()
+    print deckRawList2
+    -- Remove the header row (line 1)
+    let deckRawList3 = drop 1 deckRawList2
+    printDebug ("Raw Deck List 3 (Drop header row):") -- IO ()
+    print deckRawList3
+    -- 
+    printDebug ("Parsing deck:") -- IO ()
+    let deck = "To be implemented" -- String
+    return deck -- Wraps String in IO, returns IO String
+
+-- 3.C. Parse Deck as strict ByteString without Cassava
+parseDeckFileManuallyB :: B8.ByteString -> [[B8.ByteString]]
+parseDeckFileManuallyB deckRaw = do
+
+--}
+
+-- Create Deck
+createDeck :: IO [[B8.ByteString]] -- Change to `IO [(i,Card)]` later when extraction and shuffling works]
+createDeck = do
+    checkDeckFile deckFilePath -- IO () : succeeds or crashes
+    deckRaw <- readDeckFileString deckFilePath -- String <- IO String -- Temporary, for debugging
+    deckB8 <- readDeckFileBytestring deckFilePath -- B8.ByteString <- IO B8.ByteString
+    printDebug ("ByteString Deck: (putStrLn show)") -- IO ()
+    putStrLn (show deckB8) -- IO ()
+    printDebug ("ByteString Deck: (B8.putStrLn)") -- IO ()
+    B8.putStrLn (deckB8) -- IO ()
+    let deckB8List = parseDeckFileManualB8 deckB8 -- B8.ByteString <- [[B8.ByteString]]
+    printDebug ("ByteString Deck parsed as a List of Lists:") -- IO ()
+    putStrLn (show deckB8List) -- IO ()
+    let deckB8ListFiltered = filterDeckEmptyRows deckB8List
+    printDebug ("ByteString Deck with empty rows filtered out:") -- IO ()
+    putStrLn (show deckB8ListFiltered) -- IO ()
+    let deckB8DropHeader = drop 1 deckB8ListFiltered
+    printDebug ("ByteString Deck with empty rows filtered out and row 1 dropped:") -- IO ()
+    putStrLn (show deckB8DropHeader) -- IO ()
+    let deckB8Final = deckB8DropHeader
+    return deckB8Final -- Wraps String in IO, returns IO String
+
+-- 1. Check Deck File
+checkDeckFile :: FilePath -> IO ()
+checkDeckFile deckFile = do
+    putStrLn ("Checking for a deck file")
+    deckFileExists :: Bool <- doesFileExist deckFile -- Bool <- IO Bool
+    if deckFileExists == True
+        then do
+            printDebug ("Deck file found at " ++ deckFile) -- IO ()
+        else do
+            printDebug ("Deck file not found at " ++ deckFile) -- IO ()
+            exitGame (FileNotFound deckFile)
+
+-- 2.A Read Deck File (String)
+-- Temporary for debugging
+-- TODO: Remove later
+readDeckFileString :: FilePath -> IO String
+readDeckFileString deckFile = do
+    deckRaw <- readFile deckFile -- String <- IO String
+    printDebug ("Raw Deck:") -- IO ()
+    putStrLn (deckRaw) -- IO ()
+    return deckRaw -- Wraps String in IO, returns IO String
+
+-- 2.B Read Deck File (Strict ByteString)
+readDeckFileBytestring :: FilePath -> IO B8.ByteString
+readDeckFileBytestring deckFile = do
+    deckB8 <- B8.readFile deckFile -- B8.ByteString <- IO B8.ByteString
+    printDebug ("ByteString Deck:") -- IO ()
+    putStrLn (show deckB8) -- IO ()
+    return deckB8 -- Wraps String in IO, returns IO String
+
+-- 3. Parse Deck as strict ByteString without Cassava
+parseDeckFileManualB8 :: B8.ByteString -> [[B8.ByteString]]
+parseDeckFileManualB8 deckRaw = map (B8.split ',') (B8.split '\n' deckRaw)
+
+-- 4. Filter out empty rows
+filterDeckEmptyRows :: [[B8.ByteString]] -> [[B8.ByteString]]
+filterDeckEmptyRows xs = [x | x <- xs, not (null x)]
+
+-- 4. Validate Deck
+-- validateDeck :: [[B8.ByteString]]
+-- validateDeck deckB8List
 
 {-
 -- Print deck CSV file
 printDeck :: IO ()
 printDeck deckFile = do
-    rawDeck <- 
+    deckRaw <- 
 -}
 
 -- Ordered Deck
