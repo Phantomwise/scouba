@@ -340,30 +340,28 @@ parseValue bs =
 
 parseSuit :: B8.ByteString -> Either String Suit
 parseSuit bs
-    | s == "Spades" = Right Spades
-    | s == "Hearts" = Right Hearts
-    | s == "Clubs" = Right Clubs
-    | s == "Diamonds" = Right Diamonds
-    | otherwise = Left ("Invalid suit:" ++ B8.unpack bs)
-    where s = B8.unpack bs
+    | bs == B8.pack "Spades"   = Right Spades
+    | bs == B8.pack "Hearts"   = Right Hearts
+    | bs == B8.pack "Clubs"    = Right Clubs
+    | bs == B8.pack "Diamonds" = Right Diamonds
+    | otherwise                = Left ("Invalid suit:" ++ B8.unpack bs)
 
 parseRank :: B8.ByteString -> Either String Rank
 parseRank bs
-    | s == "Ace" = Right Ace
-    | s == "Two" = Right Two
-    | s == "Three" = Right Three
-    | s == "Four" = Right Four
-    | s == "Five" = Right Five
-    | s == "Six" = Right Six
-    | s == "Seven" = Right Seven
-    | s == "Eight" = Right Eight
-    | s == "Nine" = Right Nine
-    | s == "Ten" = Right Ten
-    | s == "Jack" = Right Jack
-    | s == "Queen" = Right Queen
-    | s == "King" = Right King
-    | otherwise = Left ("Invalid suit:" ++ B8.unpack bs)
-    where s = B8.unpack bs
+    | bs == B8.pack "Ace"   = Right Ace
+    | bs == B8.pack "Two"   = Right Two
+    | bs == B8.pack "Three" = Right Three
+    | bs == B8.pack "Four"  = Right Four
+    | bs == B8.pack "Five"  = Right Five
+    | bs == B8.pack "Six"   = Right Six
+    | bs == B8.pack "Seven" = Right Seven
+    | bs == B8.pack "Eight" = Right Eight
+    | bs == B8.pack "Nine"  = Right Nine
+    | bs == B8.pack "Ten"   = Right Ten
+    | bs == B8.pack "Jack"  = Right Jack
+    | bs == B8.pack "Queen" = Right Queen
+    | bs == B8.pack "King"  = Right King
+    | otherwise             = Left ("Invalid suit:" ++ B8.unpack bs)
 
 
 {-
