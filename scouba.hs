@@ -235,7 +235,6 @@ cardValue x = rankValue (rank x)
 createDeck :: IO (Either String [Card]) -- Change to `IO [(i,Card)]` later when extraction and shuffling works]
 createDeck = do
     checkDeckFile deckFilePath -- IO () : succeeds or crashes
-    deckRaw                 :: String               <- readDeckFileString deckFilePath      -- String <- IO String -- Temporary, for debugging
     deckB8                  :: B8.ByteString        <- readDeckFileBytestring deckFilePath  -- B8.ByteString <- IO B8.ByteString
     printDebug ("ByteString Deck: (putStrLn show)")                                         -- IO ()
     putStrLn (show deckB8)                                                                  -- IO ()
@@ -269,17 +268,7 @@ checkDeckFile deckFile = do
             printDebug ("Deck file not found at " ++ deckFile) -- IO ()
             exitGame (FileNotFound deckFile)
 
--- 2.A Read Deck File (String)
--- Temporary for debugging
--- TODO: Remove later
-readDeckFileString :: FilePath -> IO String
-readDeckFileString deckFile = do
-    deckRaw <- readFile deckFile -- String <- IO String
-    printDebug ("Raw Deck:") -- IO ()
-    putStrLn (deckRaw) -- IO ()
-    return deckRaw -- Wraps String in IO, returns IO String
-
--- 2.B Read Deck File (Strict ByteString)
+-- 2. Read Deck File (Strict ByteString)
 readDeckFileBytestring :: FilePath -> IO B8.ByteString
 readDeckFileBytestring deckFile = do
     deckB8 <- B8.readFile deckFile -- B8.ByteString <- IO B8.ByteString
