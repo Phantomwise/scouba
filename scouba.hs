@@ -164,6 +164,7 @@ data Card = Card
     , rank :: Rank
     , value :: Int
     }
+    deriving (Eq, Show)
 
 {-
 Should automatically create accessor functions:
@@ -307,7 +308,7 @@ parseDeckFileManuallyB deckRaw = do
 --}
 
 -- Create Deck
-createDeck :: IO [[B8.ByteString]] -- Change to `IO [(i,Card)]` later when extraction and shuffling works]
+createDeck :: IO (Either String [Card]) -- Change to `IO [(i,Card)]` later when extraction and shuffling works]
 createDeck = do
     checkDeckFile deckFilePath -- IO () : succeeds or crashes
     deckRaw <- readDeckFileString deckFilePath -- String <- IO String -- Temporary, for debugging
@@ -326,7 +327,11 @@ createDeck = do
     printDebug ("ByteString Deck with empty rows filtered out and row 1 dropped:") -- IO ()
     putStrLn (show deckB8DropHeader) -- IO ()
     let deckB8Final = deckB8DropHeader
-    return deckB8Final -- Wraps String in IO, returns IO String
+    putStrLn (show deckB8Final) -- IO ()
+    let deckFinal = parseDeckToListOfCards deckB8Final
+    printDebug ("Card Deck:") -- IO ()
+    putStrLn (show deckFinal) -- IO ()
+    return deckFinal -- Wraps String in IO, returns IO String
 
 -- 1. Check Deck File
 checkDeckFile :: FilePath -> IO ()
@@ -370,27 +375,47 @@ filterDeckEmptyRows xs = [x | x <- xs, not (null x)]
 -- validateDeck :: [[B8.ByteString]]
 -- validateDeck deckB8List
 
+parseDeckToListOfCards :: [[B8.ByteString]] -> Either String [Card]
+parseDeckToListOfCards d = mapM parseRowToCard d
 
-convertNm :: B8.ByteString -> Either String String -- Change it to Either String Text later
-convertNm bs
+parseRowToCard :: [B8.ByteString] -> Either String Card
+parseRowToCard [nm, name, suit, rank, value] =
+    case parseNm nm of
+        Left err -> Left ("Parsing error on " ++ err)
+        Right n ->
+            case parseName name of
+                Left err -> Left ("Parsing error on " ++ err)
+                Right na ->
+                    case parseSuit suit of
+                        Left err -> Left ("Parsing error on " ++ err)
+                        Right s ->
+                            case parseRank rank of
+                                Left err -> Left ("Parsing error on " ++ err)
+                                Right r ->
+                                    case parseValue value of
+                                        Left err -> Left ("Parsing error on " ++ err)
+                                        Right v -> Right (Card { nm = n, name = na, suit = s, rank = r, value = v } )
+
+parseNm :: B8.ByteString -> Either String String -- Change it to Either String Text later
+parseNm bs
     | s == "" = Left ("Invalid Nm field:" ++ B8.unpack bs)
     | otherwise = Right s
     where s = B8.unpack bs
 
-convertName :: B8.ByteString -> Either String String -- Change it to Either String Text later
-convertName bs
+parseName :: B8.ByteString -> Either String String -- Change it to Either String Text later
+parseName bs
     | s == "" = Left ("Invalid Name field:" ++ B8.unpack bs)
     | otherwise = Right s
     where s = B8.unpack bs
 
-convertValue :: B8.ByteString -> Either String Int
-convertValue bs =
+parseValue :: B8.ByteString -> Either String Int
+parseValue bs =
     case reads (B8.unpack bs) :: [(Int, String)] of
         [(n,"")] -> Right n
         _        -> Left ("Invalid Value field:" ++ B8.unpack bs)
 
-convertSuit :: B8.ByteString -> Either String Suit
-convertSuit bs
+parseSuit :: B8.ByteString -> Either String Suit
+parseSuit bs
     | s == "Spades" = Right Spades
     | s == "Hearts" = Right Hearts
     | s == "Clubs" = Right Clubs
@@ -398,8 +423,8 @@ convertSuit bs
     | otherwise = Left ("Invalid suit:" ++ B8.unpack bs)
     where s = B8.unpack bs
 
-convertRank :: B8.ByteString -> Either String Rank
-convertRank bs
+parseRank :: B8.ByteString -> Either String Rank
+parseRank bs
     | s == "Ace" = Right Ace
     | s == "Two" = Right Two
     | s == "Three" = Right Three
