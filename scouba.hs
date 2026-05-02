@@ -284,13 +284,12 @@ parseDeckFileManualB8 deckRaw = map (B8.split ',') (B8.split '\n' deckRaw)
 filterDeckEmptyRows :: [[B8.ByteString]] -> [[B8.ByteString]]
 filterDeckEmptyRows xs = [x | x <- xs, not (null x)]
 
--- 4. Validate Deck
--- validateDeck :: [[B8.ByteString]]
--- validateDeck deckB8List
 
+-- Parse full deck
 parseDeckToListOfCards :: [[B8.ByteString]] -> Either String [Card]
 parseDeckToListOfCards d = mapM parseRowToCard d
 
+-- Parse deck row
 parseRowToCard :: [B8.ByteString] -> Either String Card
 parseRowToCard [nm, name, suit, rank, value] =
     case parseNm nm of
@@ -309,24 +308,28 @@ parseRowToCard [nm, name, suit, rank, value] =
                                         Left err -> Left ("Parsing error on " ++ err)
                                         Right v -> Right (Card { nm = n, name = na, suit = s, rank = r, value = v } )
 
+-- Parse Nm field
 parseNm :: B8.ByteString -> Either String String -- Change it to Either String Text later
 parseNm bs
     | s == "" = Left ("Invalid Nm field:" ++ B8.unpack bs)
     | otherwise = Right s
     where s = B8.unpack bs
 
+-- Parse Name field
 parseName :: B8.ByteString -> Either String String -- Change it to Either String Text later
 parseName bs
     | s == "" = Left ("Invalid Name field:" ++ B8.unpack bs)
     | otherwise = Right s
     where s = B8.unpack bs
 
+-- Parse Value field
 parseValue :: B8.ByteString -> Either String Int
 parseValue bs =
     case reads (B8.unpack bs) :: [(Int, String)] of
         [(n,"")] -> Right n
         _        -> Left ("Invalid Value field:" ++ B8.unpack bs)
 
+-- Parse Suit field
 parseSuit :: B8.ByteString -> Either String Suit
 parseSuit bs
     | bs == B8.pack "Spades"   = Right Spades
@@ -335,6 +338,7 @@ parseSuit bs
     | bs == B8.pack "Diamonds" = Right Diamonds
     | otherwise                = Left ("Invalid suit:" ++ B8.unpack bs)
 
+-- Parse Rank field
 parseRank :: B8.ByteString -> Either String Rank
 parseRank bs
     | bs == B8.pack "Ace"   = Right Ace
