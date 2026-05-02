@@ -311,27 +311,27 @@ parseDeckFileManuallyB deckRaw = do
 createDeck :: IO (Either String [Card]) -- Change to `IO [(i,Card)]` later when extraction and shuffling works]
 createDeck = do
     checkDeckFile deckFilePath -- IO () : succeeds or crashes
-    deckRaw <- readDeckFileString deckFilePath -- String <- IO String -- Temporary, for debugging
-    deckB8 <- readDeckFileBytestring deckFilePath -- B8.ByteString <- IO B8.ByteString
-    printDebug ("ByteString Deck: (putStrLn show)") -- IO ()
-    putStrLn (show deckB8) -- IO ()
-    printDebug ("ByteString Deck: (B8.putStrLn)") -- IO ()
-    B8.putStrLn (deckB8) -- IO ()
-    let deckB8List = parseDeckFileManualB8 deckB8 -- B8.ByteString <- [[B8.ByteString]]
-    printDebug ("ByteString Deck parsed as a List of Lists:") -- IO ()
-    putStrLn (show deckB8List) -- IO ()
-    let deckB8ListFiltered = filterDeckEmptyRows deckB8List
-    printDebug ("ByteString Deck with empty rows filtered out:") -- IO ()
-    putStrLn (show deckB8ListFiltered) -- IO ()
-    let deckB8DropHeader = drop 1 deckB8ListFiltered
-    printDebug ("ByteString Deck with empty rows filtered out and row 1 dropped:") -- IO ()
-    putStrLn (show deckB8DropHeader) -- IO ()
-    let deckB8Final = deckB8DropHeader
-    putStrLn (show deckB8Final) -- IO ()
-    let deckFinal = parseDeckToListOfCards deckB8Final
-    printDebug ("Card Deck:") -- IO ()
-    putStrLn (show deckFinal) -- IO ()
-    return deckFinal -- Wraps String in IO, returns IO String
+    deckRaw                 :: String               <- readDeckFileString deckFilePath      -- String <- IO String -- Temporary, for debugging
+    deckB8                  :: B8.ByteString        <- readDeckFileBytestring deckFilePath  -- B8.ByteString <- IO B8.ByteString
+    printDebug ("ByteString Deck: (putStrLn show)")                                         -- IO ()
+    putStrLn (show deckB8)                                                                  -- IO ()
+    printDebug ("ByteString Deck: (B8.putStrLn)")                                           -- IO ()
+    B8.putStrLn (deckB8)                                                                    -- IO ()
+    let deckB8List          :: [[B8.ByteString]]    = parseDeckFileManualB8 deckB8          -- B8.ByteString <- [[B8.ByteString]]
+    printDebug ("ByteString Deck parsed as a List of Lists:")                               -- IO ()
+    putStrLn (show deckB8List)                                                              -- IO ()
+    let deckB8ListFiltered  :: [[B8.ByteString]]    = filterDeckEmptyRows deckB8List
+    printDebug ("ByteString Deck with empty rows filtered out:")                            -- IO ()
+    putStrLn (show deckB8ListFiltered)                                                      -- IO ()
+    let deckB8DropHeader    :: [[B8.ByteString]]    = drop 1 deckB8ListFiltered
+    printDebug ("ByteString Deck with empty rows filtered out and row 1 dropped:")          -- IO ()
+    putStrLn (show deckB8DropHeader)                                                        -- IO ()
+    let deckB8Final         :: [[B8.ByteString]]    = deckB8DropHeader
+    putStrLn (show deckB8Final)                                                             -- IO ()
+    let deckFinal           :: Either String [Card] = parseDeckToListOfCards deckB8Final
+    printDebug ("Card Deck:")                                                               -- IO ()
+    putStrLn (show deckFinal)                                                               -- IO ()
+    return deckFinal                                                                        -- Wraps String in IO, returns IO String
 
 -- 1. Check Deck File
 checkDeckFile :: FilePath -> IO ()
