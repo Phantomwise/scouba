@@ -46,28 +46,7 @@ import qualified Data.ByteString.Char8 as B8
 
 
 import Config
-
-
--- ================================================================
--- COLOR AND DISPLAY
--- ================================================================
-
-
--- Define a data type for colors
-data AnsiColor = Black | Red | Green | Yellow | Blue | Magenta | Cyan | White | Reset
-    deriving (Eq, Enum, Show)
-
--- Map to ANSI color codes
-ansi :: AnsiColor -> String
-ansi Black   = "\x1b[30m"
-ansi Red     = "\x1b[31m"
-ansi Green   = "\x1b[32m"
-ansi Yellow  = "\x1b[33m"
-ansi Blue    = "\x1b[34m"
-ansi Magenta = "\x1b[35m"
-ansi Cyan    = "\x1b[36m"
-ansi White   = "\x1b[37m"
-ansi Reset   = "\x1b[0m"
+import AnsiColorLite (AnsiColor8(..), ansi)
 
 
 -- Print debug messages
@@ -171,7 +150,7 @@ isFace x
 
 
 -- Function to assign a color to a suit
-suitColor :: Suit -> AnsiColor
+suitColor :: Suit -> AnsiColor8
 suitColor x
     | x == Spades = Blue
     | x == Hearts = Red
@@ -181,7 +160,7 @@ suitColor x
 
 
 -- Function to determine the display color of a card
-cardColor :: Card -> AnsiColor
+cardColor :: Card -> AnsiColor8
 cardColor x = suitColor (suit x)
 -- Not yet in use
 
