@@ -355,7 +355,7 @@ parseRank bs
     | bs == B8.pack "Queen" = Right Queen
     | bs == B8.pack "King"  = Right King
     | otherwise             = Left ("Invalid suit:" ++ B8.unpack bs)
-
+    -- TODO: Refactor using `reads`
 
 {-
 -- Print deck CSV file
