@@ -24,7 +24,7 @@ debug = True
 
 -- Deck File Path
 deckFilePath :: FilePath
-deckFilePath = "scouba_deck.csv"
+deckFilePath = "data/deck.csv"
 
 
 -- Number of players
