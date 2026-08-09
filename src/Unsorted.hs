@@ -19,25 +19,29 @@ import System.Exit (ExitCode(..), exitWith, exitSuccess)
 -- Needed to exit cleanly with an exit code
 -- base
 
-import Data.Csv
+import qualified Data.ByteString.Char8 as B8
+-- Needed to implement manual parsing and preserve my sanity from Cassava
+-- Char8 allows using `,` and `\n` instead of the byte sequences `44` and `10`
+
+
+-- Cassava imports:
+-- Not used, can't understand how to use the module so doing manual parsing for now. Kept for later.
+
+-- import Data.Csv
 -- Cassava module
 -- Needed to parse CSV data
 -- haskellPackages.cassava
 -- Not yet in use
 -- TODO: REMOVE
 
-import qualified Data.ByteString.Lazy as BL
+-- import qualified Data.ByteString.Lazy as BL
 -- Needed by cassava to read CSV
 -- TODO: find out what the hell lazy bytestrings are
 -- TODO: REMOVE
 
-import qualified Data.ByteString.Lazy.Char8 as BLC
+-- import qualified Data.ByteString.Lazy.Char8 as BLC
 -- Needed by BLC.unpack to convert a ByteString into a String
 -- TODO: REMOVE
-
-import qualified Data.ByteString.Char8 as B8
--- Needed to implement manual parsing and preserve my sanity from Cassava
--- Char8 allows using `,` and `\n` instead of the byte sequences `44` and `10`
 
 
 -- ================================================================
