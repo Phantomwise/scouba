@@ -14,8 +14,8 @@ module CreateDeck where
 
 import Cards
 import Config
+import Display
 import Exit
-import Unsorted
 
 
 -- ================================================================

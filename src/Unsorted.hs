@@ -12,10 +12,6 @@ module Unsorted where
 -- ================================================================
 
 
-import Config
-import AnsiColorLite (AnsiColor8(..), ansi)
-
-
 -- ================================================================
 -- IMPORTS
 -- ================================================================
@@ -39,25 +35,6 @@ import AnsiColorLite (AnsiColor8(..), ansi)
 -- import qualified Data.ByteString.Lazy.Char8 as BLC
 -- Needed by BLC.unpack to convert a ByteString into a String
 -- TODO: REMOVE
-
-
--- ================================================================
--- DISPLAY
--- ================================================================
-
-
--- Print debug messages
-printDebug :: String -> IO ()
-printDebug msg =
-    if debug
-        then putStrLn (ansi Magenta ++ "[DEBUG] " ++ ansi Reset ++ msg)
-        else return ()
-
-
--- Print error messages
-printError :: String -> IO ()
-printError msg =
-    putStrLn (ansi Red ++ "[ERROR] " ++ ansi Reset ++ msg)
 
 
 -- ================================================================

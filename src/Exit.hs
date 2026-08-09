@@ -12,8 +12,7 @@ module Exit where
 -- ================================================================
 
 
-import AnsiColorLite (AnsiColor8(..), ansi)
-import Unsorted
+import Display
 
 
 -- ================================================================

@@ -14,7 +14,6 @@ module Menu where
 
 import CreateDeck
 import Exit
-import Unsorted
 
 
 -- ================================================================
