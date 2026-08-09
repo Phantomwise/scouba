@@ -253,7 +253,7 @@ parseDeckToListOfCards d = mapM parseRowToCard d
 
 -- Parse deck row
 parseRowToCard :: [B8.ByteString] -> Either String Card
-parseRowToCard [nm, name, suit, rank, value] =
+parseRowToCard [nm, name, suit, rank] =
     case parseNm nm of
         Left err -> Left ("Parsing error on " ++ err)
         Right n ->
@@ -265,10 +265,7 @@ parseRowToCard [nm, name, suit, rank, value] =
                         Right s ->
                             case parseRank rank of
                                 Left err -> Left ("Parsing error on " ++ err)
-                                Right r ->
-                                    case parseValue value of
-                                        Left err -> Left ("Parsing error on " ++ err)
-                                        Right v -> Right (Card { nm = n, name = na, suit = s, rank = r, value = v } )
+                                Right r -> Right (Card { nm = n, name = na, suit = s, rank = r, value = rankValue r } )
 
 -- Parse Nm field
 parseNm :: B8.ByteString -> Either String String -- Change it to Either String Text later
@@ -283,13 +280,6 @@ parseName bs
     | s == "" = Left ("Invalid Name field:" ++ B8.unpack bs)
     | otherwise = Right s
     where s = B8.unpack bs
-
--- Parse Value field
-parseValue :: B8.ByteString -> Either String Int
-parseValue bs =
-    case reads (B8.unpack bs) :: [(Int, String)] of
-        [(n,"")] -> Right n
-        _        -> Left ("Invalid Value field:" ++ B8.unpack bs)
 
 -- Parse Suit field
 parseSuit :: B8.ByteString -> Either String Suit
