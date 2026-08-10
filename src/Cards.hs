@@ -26,7 +26,7 @@ import AnsiColorLite (AnsiColor8(..), ansi)
 
 
 -- Define data type for card suit
-data Suit = Spades | Hearts | Clubs | Diamonds
+data Suit = Spades | Hearts | Clubs | Diamonds | Swords | Cups | Batons | Coins
     deriving (Eq, Enum, Show)
 
 
@@ -70,14 +70,14 @@ isFace x
 -- Not yet in use
 
 
--- Function to assign a color to a suit
+-- Function to assign a display color to a suit
 suitColor :: Suit -> AnsiColor8
 suitColor x
-    | x == Spades = Blue
-    | x == Hearts = Red
-    | x == Clubs = Cyan
-    | x == Diamonds = Magenta
-    | otherwise = White
+    | elem x [Spades,   Swords] = Blue
+    | elem x [Hearts,   Cups]   = Red
+    | elem x [Clubs,    Batons] = Green
+    | elem x [Diamonds, Coins]  = Magenta
+    | otherwise                 = Black
 
 
 -- Function to determine the display color of a card
