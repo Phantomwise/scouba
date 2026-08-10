@@ -59,7 +59,7 @@ exitMessage  UnknownError       = ("Unknown error")
 exitGame :: ExitStatus -> IO ()
 exitGame Success = do
     putStrLn (exitMessage Success)
-    statusCode UnknownError
+    statusCode Success
 exitGame status = do
     printError (exitMessage status)
     statusCode UnknownError
