@@ -27,6 +27,11 @@ debug :: Bool
 debug = True
 
 
+-- Decks Folder Path
+decksFolderPath :: FilePath
+decksFolderPath = "data/decks/"
+
+
 -- Deck File Path
 deckFilePath :: FilePath
 deckFilePath = "data/deck.csv"
