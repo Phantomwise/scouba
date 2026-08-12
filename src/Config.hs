@@ -35,6 +35,7 @@ decksFolderPath = "data/decks/"
 -- Deck File Path
 deckFilePath :: FilePath
 deckFilePath = "data/deck.csv"
+-- TODO: Remove once unused
 
 
 -- Directory for the suit ASCII art
