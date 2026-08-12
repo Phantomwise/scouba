@@ -12,6 +12,7 @@ module CreateDeck where
 -- ================================================================
 
 
+import AnsiColorLite (AnsiColor8(..), ansi)
 import Cards
 import Config
 import Display
@@ -40,8 +41,10 @@ import qualified Data.ByteString.Char8 as B8
 -- Create Deck
 createDeck :: IO (Either String [Card]) -- Change to `IO [(i,Card)]` later when extraction and shuffling works]
 createDeck = do
-    checkDeckFile deckFilePath -- IO () : succeeds or crashes
-    deckB8                  :: B8.ByteString        <- readDeckFileBytestring deckFilePath  -- B8.ByteString <- IO B8.ByteString
+    deckChoice <- askForDeck
+    let deckPath            :: FilePath             = matchDeck deckChoice                  -- FilePath
+    checkDeckFile deckPath                                                                  -- IO ()
+    deckB8                  :: B8.ByteString        <- readDeckFileBytestring deckPath      -- B8.ByteString <- IO B8.ByteString
     printDebug ("ByteString Deck: (putStrLn show)")                                         -- IO ()
     putStrLn (show deckB8)                                                                  -- IO ()
     printDebug ("ByteString Deck: (B8.putStrLn)")                                           -- IO ()
@@ -61,6 +64,27 @@ createDeck = do
     printDebug ("Card Deck:")                                                               -- IO ()
     putStrLn (show deckFinal)                                                               -- IO ()
     return deckFinal                                                                        -- Wraps String in IO, returns IO String
+
+
+askForDeck :: IO Char
+askForDeck = do
+    putStrLn ""
+    putStrLn "Please choose a deck: "
+    putStrLn "1. French deck, 52 cards"
+    putStrLn "2. French deck, 40 cards"
+    putStrLn "3. Italian deck, 40 cards"
+    deckChoice <- getChar
+    _ <- getLine
+    return deckChoice
+
+
+matchDeck :: Char -> FilePath
+matchDeck d
+    | d == '1' = decksFolderPath ++ "52-French.csv"
+    | d == '2' = decksFolderPath ++ "40-French.csv"
+    | d == '3' = decksFolderPath ++ "40-Italian.csv"
+    | otherwise = decksFolderPath ++ "52-French.csv"
+
 
 -- 1. Check Deck File
 checkDeckFile :: FilePath -> IO ()
