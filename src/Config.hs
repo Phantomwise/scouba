@@ -32,6 +32,11 @@ deckFilePath :: FilePath
 deckFilePath = "data/deck.csv"
 
 
+-- Directory for the suit ASCII art
+suitArtDir :: FilePath
+suitArtDir = "data/suits/"
+
+
 -- Number of players
 playersCount :: Int
 playersCount = 2
