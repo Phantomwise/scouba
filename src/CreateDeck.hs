@@ -132,6 +132,10 @@ parseSuit bs
     | bs == B8.pack "Hearts"   = Right Hearts
     | bs == B8.pack "Clubs"    = Right Clubs
     | bs == B8.pack "Diamonds" = Right Diamonds
+    | bs == B8.pack "Swords"   = Right Swords
+    | bs == B8.pack "Cups"     = Right Cups
+    | bs == B8.pack "Batons"   = Right Batons
+    | bs == B8.pack "Coins"    = Right Coins
     | otherwise                = Left ("Invalid suit:" ++ B8.unpack bs)
 
 -- Parse Rank field
