@@ -3,8 +3,8 @@
 -- ================================================================
 
 
--- app/Main.hs
-module Main where
+-- src/Config.hs
+module LoadConfig where
 
 
 -- ================================================================
@@ -12,8 +12,7 @@ module Main where
 -- ================================================================
 
 
-import Menu
-import LoadConfig -- Not yet in use
+-- import Config
 
 
 -- ================================================================
@@ -21,21 +20,27 @@ import LoadConfig -- Not yet in use
 -- ================================================================
 
 
-import System.IO (hSetBuffering, stdout, BufferMode(LineBuffering))
+import System.Environment (lookupEnv)
 
 
 -- ================================================================
--- MAIN
+-- GET PATHS
 -- ================================================================
 
 
-main :: IO ()
-main = do
-    hSetBuffering stdout LineBuffering
-    -- TODO: Add initialization step
-        -- TODO: Use resolvePaths
-        -- TODO: Cache ascii art
-    mainMenu
+sysDataEnv    :: String = "SCOUBA_SYSDATA"
+sysConfigEnv  :: String = "SCOUBA_SYSCONFIG"
+userDataEnv   :: String = "SCOUBA_USERDATA"
+userConfigEnv :: String = "SCOUBA_USERCONFIG"
+
+-- Resolve paths
+resolvePaths :: String -> IO FilePath
+resolvePaths env = do
+	result <- lookupEnv env
+	case result of
+		Nothing               -> return ""
+		Just path | null path -> return path -- NB: `|` is an `and if`, not `or if`
+		Just path             -> return path
 
 
 -- ================================================================
