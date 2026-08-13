@@ -1,3 +1,9 @@
+# Export ENV variables
+export SCOUBA_SYSDATA := data
+export SCOUBA_SYSCONFIG := config
+export SCOUBA_USERDATA := user/data
+export SCOUBA_USERCONFIG := user/config
+
 # Declare phony targets
 .PHONY: run build exec
 
