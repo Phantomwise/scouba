@@ -37,6 +37,11 @@ suitArtDir :: FilePath
 suitArtDir = "data/suits/"
 
 
+-- Size of the ASCII art for the suits
+suitArtSize :: String
+suitArtSize = "6x4"
+
+
 -- Number of players
 playersCount :: Int
 playersCount = 2

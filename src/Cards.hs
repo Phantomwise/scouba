@@ -13,11 +13,16 @@ module Cards where
 
 
 import AnsiColorLite (AnsiColor8(..), ansi)
+import Config
 
 
 -- ================================================================
 -- IMPORTS
 -- ================================================================
+
+
+import Data.Char
+-- Needed for toLower
 
 
 -- ================================================================
@@ -86,18 +91,10 @@ cardColor x = suitColor (suit x)
 -- Not yet in use
 
 
--- Function to get the filename of the ascii art for a suit (directory path defined in Config.hs)
-suitArt :: Suit -> FilePath
-suitArt x
-    | x == Spades = "spades.txt"
-    | x == Hearts = "hearts.txt"
-    | x == Clubs = "clubs.txt"
-    | x == Diamonds = "diamonds.txt"
-    | x == Swords = "blank.txt"
-    | x == Cups = "blank.txt"
-    | x == Batons = "blank.txt"
-    | x == Coins = "blank.txt"
-    | otherwise = "blank.txt"
+-- Function to get the filename of the ascii art for a suit (directory path and size variable defined in Config.hs)
+suitArtPath :: Suit -> FilePath
+suitArtPath s = suitArtDir ++ map toLower (show s) ++ "-" ++ suitArtSize ++ ".txt"
+-- Not yet in use
 
 
 -- Function to get the value of a card from its rank
