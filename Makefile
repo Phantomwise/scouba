@@ -10,14 +10,14 @@ export SCOUBA_USERCONFIG := user/config
 # Run the program as a script
 run:
 	@echo -e "\033[1;33mRunning scouba as a haskell script\033[0m"
-	runhaskell -isrc app/Main.hs
+	runhaskell -Wno-tabs -isrc app/Main.hs
 
 # Compile the program
 build:
 	@echo -e "\033[1;33mCleaning up build directory\033[0m"
 	rm -rf build scouba
 	@echo -e "\033[1;33mCompiling scouba with GHC\033[0m"
-	ghc -isrc -outputdir build -o scouba app/Main.hs
+	ghc -Wno-tabs -isrc -outputdir build -o scouba app/Main.hs
 	@echo -e "\033[1;33mGiving executable permissions to scouba\033[0m"
 	chmod +x scouba
 
@@ -31,3 +31,4 @@ exec:
 # -outputdir build :  put .o/.hi build artifacts in build/ instead of next to sources
 # -o scouba        :  name the compiled binary "scouba"
 # app/Main.hs      :  source to compile
+# -Wno-tabs        : please shut up about tabs they're objectively superior and I will die on that hill
