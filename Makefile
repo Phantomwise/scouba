@@ -25,3 +25,9 @@ build:
 exec:
 	@echo -e "\033[1;33mRunning scouba as a compiled binary\033[0m"
 	./scouba
+
+# GHC options
+# -isrc            :  add `src` directory to the module search path
+# -outputdir build :  put .o/.hi build artifacts in build/ instead of next to sources
+# -o scouba        :  name the compiled binary "scouba"
+# app/Main.hs      :  source to compile
