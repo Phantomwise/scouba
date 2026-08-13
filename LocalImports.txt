@@ -1,7 +1,10 @@
 Main.hs
  └── Menu.hs
       ├── CreateDeck.hs
+      │    ├── AnsiColorLite.hs
       │    ├── Cards.hs
+      │    │    ├── AnsiColorLite.hs
+      │    │    └── Config.hs
       │    ├── Config.hs
       │    ├── Display.hs
       │    │    ├── AnsiColorLite.hs
