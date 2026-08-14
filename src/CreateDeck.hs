@@ -79,7 +79,7 @@ createDeck = do
     pPrint deckFinal                                                                        -- Show (Either String [Card]) => Either String [Card] -> IO ()
     case deckFinal of
         Left err -> do
-            printDebug err
+            printError (err)
             error "temporary placeholder, deal with exit later"
         Right c -> do
             return c
@@ -156,14 +156,14 @@ parseRowToCard [nm, name, suit, rank] =
 -- Parse Nm field
 parseNm :: B8.ByteString -> Either String String -- Change it to Either String Text later
 parseNm bs
-    | s == "" = Left ("Invalid nm field: " ++ B8.unpack bs)
+    | s == "" = Left ("Invalid " ++ ansi Cyan ++ "nm" ++ ansi Reset ++ " field: " ++ ansi Red ++ B8.unpack bs ++ ansi Reset)
     | otherwise = Right s
     where s = B8.unpack bs
 
 -- Parse Name field
 parseName :: B8.ByteString -> Either String String -- Change it to Either String Text later
 parseName bs
-    | s == "" = Left ("Invalid name field: " ++ B8.unpack bs)
+    | s == "" = Left ("Invalid " ++ ansi Cyan ++ "name" ++ ansi Reset ++ " field: " ++ ansi Red ++ B8.unpack bs ++ ansi Reset)
     | otherwise = Right s
     where s = B8.unpack bs
 
@@ -178,7 +178,7 @@ parseSuit bs
     | bs == B8.pack "Cups"     = Right Cups
     | bs == B8.pack "Batons"   = Right Batons
     | bs == B8.pack "Coins"    = Right Coins
-    | otherwise                = Left ("Invalid suit field: " ++ B8.unpack bs)
+    | otherwise                = Left ("Invalid " ++ ansi Cyan ++ "suit" ++ ansi Reset ++ " field: " ++ ansi Red ++ B8.unpack bs ++ ansi Reset)
 
 -- Parse Rank field
 parseRank :: B8.ByteString -> Either String Rank
@@ -196,7 +196,7 @@ parseRank bs
     | bs == B8.pack "Jack"  = Right Jack
     | bs == B8.pack "Queen" = Right Queen
     | bs == B8.pack "King"  = Right King
-    | otherwise             = Left ("Invalid rank field: " ++ B8.unpack bs)
+    | otherwise             = Left ("Invalid " ++ ansi Cyan ++ "rank" ++ ansi Reset ++ " field: " ++ ansi Red ++ B8.unpack bs ++ ansi Reset)
     -- TODO: Refactor using `reads`
 
 {-
