@@ -87,7 +87,7 @@
 
 ## ASPIRATIONAL
 
-- [ ] Learn Cassava to replace manual CSV parsing
+- [-] Learn Cassava to replace manual CSV parsing -- Actually fuck Cassava I don't want to deal with whatever vectors are my manual parser is fine
 
 ## MISC / LATER
 
