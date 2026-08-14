@@ -110,3 +110,10 @@
 	- [ ] Construct the paths from ENV variables with `lookupEnv` and `getXdgDirectory` (which contrary to what his name suggests works for most platforms?)
 	- [ ] ENV variables: SCOUBA_SYSDATA, SCOUBA_USERDATA, SCOUBA_SYSCONFIG, SCOUBA_USERCONFIG
 	- [ ] ENV variable not needed for the user paths (`getXdgDirectory` should be enough) but use one anyway so it can be changed by packagers/users if needed --> have the program check if the variable is unset or empty, and if it is then use `getXdgDirectory`
+
+## LEGEND
+
+- [ ] To do
+- [-] Blocked
+- [/] In progress
+- [x] Done
