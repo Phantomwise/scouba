@@ -32,6 +32,8 @@ import qualified Data.ByteString.Char8 as B8
 -- Needed to implement manual parsing and preserve my sanity from Cassava
 -- Char8 allows using `,` and `\n` instead of the byte sequences `44` and `10`
 
+import Text.Pretty.Simple (pPrint)
+
 
 -- ================================================================
 -- CREATE DECK
