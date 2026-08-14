@@ -77,6 +77,7 @@
 ## BUGS
 
 - [ ] Check for instances of putStr not followed by a buffer flush (not used for now)
+- [ ] `parseRowToCard` only matches the 4-field pattern `[nm, name, suit, rank]`, add a fallback case for files with the wrong number of fields
 
 ## ANSICOLORLITE
 
