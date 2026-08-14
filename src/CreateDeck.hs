@@ -43,40 +43,40 @@ import Text.Pretty.Simple (pPrint)
 -- Create Deck
 createDeck :: IO (Either String [Card]) -- Change to `IO [(i,Card)]` later when extraction and shuffling works]
 createDeck = do
-    deckChoice <- askForDeck
-    let deckPath            :: FilePath             = matchDeck deckChoice                  -- FilePath
-    checkDeckFile deckPath                                                                  -- IO ()
+    deckChoice <- askForDeck                                                                -- Char <- IO Char
+    let deckPath            :: FilePath             = matchDeck deckChoice                  -- FilePath = Char -> FilePath
+    checkDeckFile deckPath                                                                  -- FilePath -> IO ()
     deckB8                  :: B8.ByteString        <- readDeckFileBytestring deckPath      -- B8.ByteString <- IO B8.ByteString
     -- printDebug ("ByteString Deck: (putStrLn show)")                                         -- IO ()
     -- putStrLn (show deckB8)                                                                  -- IO ()
-    printDebug ("ByteString Deck:")                                                         -- IO ()
-    pPrint deckB8                                                                           -- B8.ByteString -> IO ()
-    let deckB8List          :: [[B8.ByteString]]    = parseDeckFileManualB8 deckB8          -- B8.ByteString <- [[B8.ByteString]]
+    printDebug ("ByteString Deck:")                                                         -- String -> IO ()
+    pPrint deckB8                                                                           -- Show B8.ByteString => B8.ByteString -> IO ()
+    let deckB8List          :: [[B8.ByteString]]    = parseDeckFileManualB8 deckB8          -- [[B8.ByteString]] = B8.ByteString -> [[B8.ByteString]]
     -- printDebug ("ByteString Deck parsed as a List of Lists:")                               -- IO ()
     -- putStrLn (show deckB8List)                                                              -- IO ()
-    printDebug ("ByteString Deck parsed as a List of Lists:")                               -- IO ()
-    pPrint deckB8List                                                                       -- [[B8.ByteString]] -> IO ()
-    let deckB8ListFiltered  :: [[B8.ByteString]]    = filterDeckEmptyRows deckB8List
+    printDebug ("ByteString Deck parsed as a List of Lists:")                               -- String -> IO ()
+    pPrint deckB8List                                                                       -- Show [[B8.ByteString]] => [[B8.ByteString]] -> IO ()
+    let deckB8ListFiltered  :: [[B8.ByteString]]    = filterDeckEmptyRows deckB8List        -- [[B8.ByteString]] = [[B8.ByteString]] -> [[B8.ByteString]]
     -- printDebug ("ByteString Deck with empty rows filtered out:")                            -- IO ()
     -- putStrLn (show deckB8ListFiltered)                                                      -- IO ()
-    printDebug ("ByteString Deck with empty rows filtered out:")                            -- IO ()
+    printDebug ("ByteString Deck with empty rows filtered out:")                            -- String -> IO ()
     pPrint deckB8ListFiltered                                                               -- Show [[B8.ByteString]] => [[B8.ByteString]] -> IO ()
-    let deckB8DropHeader    :: [[B8.ByteString]]    = drop 1 deckB8ListFiltered
+    let deckB8DropHeader    :: [[B8.ByteString]]    = drop 1 deckB8ListFiltered             -- [[B8.ByteString]] = Int -> [[B8.ByteString]] -> [[B8.ByteString]]
     -- printDebug ("ByteString Deck with empty rows filtered out and row 1 dropped:")          -- IO ()
     -- putStrLn (show deckB8DropHeader)                                                        -- IO ()
-    printDebug ("ByteString Deck with empty rows filtered out and row 1 dropped:")          -- IO ()
+    printDebug ("ByteString Deck with empty rows filtered out and row 1 dropped:")          -- String -> IO ()
     pPrint deckB8DropHeader                                                                 -- Show [[B8.ByteString]] => [[B8.ByteString]] -> IO ()
-    let deckB8Final         :: [[B8.ByteString]]    = deckB8DropHeader
+    let deckB8Final         :: [[B8.ByteString]]    = deckB8DropHeader                      -- [[B8.ByteString]] = [[B8.ByteString]]
     -- printDebug ("ByteString Deck final:")                                                   -- IO ()
     -- putStrLn (show deckB8Final)                                                             -- IO ()
-    printDebug ("ByteString Deck final:")                                                   -- IO ()
+    printDebug ("ByteString Deck final:")                                                   -- String -> IO ()
     pPrint deckB8Final                                                                      -- Show [[B8.ByteString]] => [[B8.ByteString]] -> IO ()
-    let deckFinal           :: Either String [Card] = parseDeckToListOfCards deckB8Final
+    let deckFinal           :: Either String [Card] = parseDeckToListOfCards deckB8Final    -- Either String [Card] = [[B8.ByteString]] -> Either String [Card]
     -- printDebug ("Card Deck final:")                                                         -- IO ()
     -- putStrLn (show deckFinal)                                                               -- IO ()
-    printDebug ("Card Deck final:")                                                         -- IO ()
+    printDebug ("Card Deck final:")                                                         -- String -> IO ()
     pPrint deckFinal                                                                        -- Show (Either String [Card]) => Either String [Card] -> IO ()
-    return deckFinal                                                                        -- Wraps String in IO, returns IO String
+    return deckFinal                                                                        -- Either String [Card] -> IO (Either String [Card])
 
 
 askForDeck :: IO Char
