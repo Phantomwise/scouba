@@ -41,7 +41,8 @@ import Text.Pretty.Simple (pPrint)
 
 
 -- Create Deck
-createDeck :: IO (Either String [Card]) -- Change to `IO [(i,Card)]` later when extraction and shuffling works]
+-- createDeck :: IO (Either String [Card]) -- Change to `IO [(i,Card)]` later when extraction and shuffling works]
+createDeck :: IO [Card] -- Change to `IO [(i,Card)]` later when extraction and shuffling works]
 createDeck = do
     deckChoice <- askForDeck                                                                -- Char <- IO Char
     let deckPath            :: FilePath             = matchDeck deckChoice                  -- FilePath = Char -> FilePath
@@ -76,8 +77,12 @@ createDeck = do
     -- putStrLn (show deckFinal)                                                               -- IO ()
     printDebug ("Card Deck final:")                                                         -- String -> IO ()
     pPrint deckFinal                                                                        -- Show (Either String [Card]) => Either String [Card] -> IO ()
-    return deckFinal                                                                        -- Either String [Card] -> IO (Either String [Card])
-
+    case deckFinal of
+        Left err -> do
+            printDebug err
+            error "temporary placeholder, deal with exit later"
+        Right c -> do
+            return c
 
 askForDeck :: IO Char
 askForDeck = do
