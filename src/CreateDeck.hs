@@ -47,24 +47,35 @@ createDeck = do
     let deckPath            :: FilePath             = matchDeck deckChoice                  -- FilePath
     checkDeckFile deckPath                                                                  -- IO ()
     deckB8                  :: B8.ByteString        <- readDeckFileBytestring deckPath      -- B8.ByteString <- IO B8.ByteString
-    printDebug ("ByteString Deck: (putStrLn show)")                                         -- IO ()
-    putStrLn (show deckB8)                                                                  -- IO ()
-    printDebug ("ByteString Deck: (B8.putStrLn)")                                           -- IO ()
-    B8.putStrLn (deckB8)                                                                    -- IO ()
+    -- printDebug ("ByteString Deck: (putStrLn show)")                                         -- IO ()
+    -- putStrLn (show deckB8)                                                                  -- IO ()
+    printDebug ("ByteString Deck:")                                                         -- IO ()
+    pPrint deckB8                                                                           -- B8.ByteString -> IO ()
     let deckB8List          :: [[B8.ByteString]]    = parseDeckFileManualB8 deckB8          -- B8.ByteString <- [[B8.ByteString]]
+    -- printDebug ("ByteString Deck parsed as a List of Lists:")                               -- IO ()
+    -- putStrLn (show deckB8List)                                                              -- IO ()
     printDebug ("ByteString Deck parsed as a List of Lists:")                               -- IO ()
-    putStrLn (show deckB8List)                                                              -- IO ()
+    pPrint deckB8List                                                                       -- [[B8.ByteString]] -> IO ()
     let deckB8ListFiltered  :: [[B8.ByteString]]    = filterDeckEmptyRows deckB8List
+    -- printDebug ("ByteString Deck with empty rows filtered out:")                            -- IO ()
+    -- putStrLn (show deckB8ListFiltered)                                                      -- IO ()
     printDebug ("ByteString Deck with empty rows filtered out:")                            -- IO ()
-    putStrLn (show deckB8ListFiltered)                                                      -- IO ()
+    pPrint deckB8ListFiltered                                                               -- Show [[B8.ByteString]] => [[B8.ByteString]] -> IO ()
     let deckB8DropHeader    :: [[B8.ByteString]]    = drop 1 deckB8ListFiltered
+    -- printDebug ("ByteString Deck with empty rows filtered out and row 1 dropped:")          -- IO ()
+    -- putStrLn (show deckB8DropHeader)                                                        -- IO ()
     printDebug ("ByteString Deck with empty rows filtered out and row 1 dropped:")          -- IO ()
-    putStrLn (show deckB8DropHeader)                                                        -- IO ()
+    pPrint deckB8DropHeader                                                                 -- Show [[B8.ByteString]] => [[B8.ByteString]] -> IO ()
     let deckB8Final         :: [[B8.ByteString]]    = deckB8DropHeader
-    putStrLn (show deckB8Final)                                                             -- IO ()
+    -- printDebug ("ByteString Deck final:")                                                   -- IO ()
+    -- putStrLn (show deckB8Final)                                                             -- IO ()
+    printDebug ("ByteString Deck final:")                                                   -- IO ()
+    pPrint deckB8Final                                                                      -- Show [[B8.ByteString]] => [[B8.ByteString]] -> IO ()
     let deckFinal           :: Either String [Card] = parseDeckToListOfCards deckB8Final
-    printDebug ("Card Deck:")                                                               -- IO ()
-    putStrLn (show deckFinal)                                                               -- IO ()
+    -- printDebug ("Card Deck final:")                                                         -- IO ()
+    -- putStrLn (show deckFinal)                                                               -- IO ()
+    printDebug ("Card Deck final:")                                                         -- IO ()
+    pPrint deckFinal                                                                        -- Show (Either String [Card]) => Either String [Card] -> IO ()
     return deckFinal                                                                        -- Wraps String in IO, returns IO String
 
 
