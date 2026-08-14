@@ -79,7 +79,7 @@ createDeck = do
     pPrint deckFinal                                                                        -- Show (Either String [Card]) => Either String [Card] -> IO ()
     case deckFinal of
         Left err -> do
-            printError (err)
+            printError (err ++ " in the file " ++ ansi Red ++ deckPath ++ ansi Reset)
             error "temporary placeholder, deal with exit later"
         Right c -> do
             return c
