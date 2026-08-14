@@ -30,7 +30,9 @@ import Config
 printDebug :: String -> IO ()
 printDebug msg =
     if debug
-        then putStrLn (ansi Magenta ++ "[DEBUG] " ++ ansi Reset ++ msg)
+        then do
+            putStr "\n"
+            putStrLn (ansi Magenta ++ "[DEBUG] " ++ ansi Reset ++ msg)
         else return ()
 
 
