@@ -156,14 +156,14 @@ parseRowToCard [nm, name, suit, rank] =
 -- Parse Nm field
 parseNm :: B8.ByteString -> Either String String -- Change it to Either String Text later
 parseNm bs
-    | s == "" = Left ("Invalid Nm field:" ++ B8.unpack bs)
+    | s == "" = Left ("Invalid nm field: " ++ B8.unpack bs)
     | otherwise = Right s
     where s = B8.unpack bs
 
 -- Parse Name field
 parseName :: B8.ByteString -> Either String String -- Change it to Either String Text later
 parseName bs
-    | s == "" = Left ("Invalid Name field:" ++ B8.unpack bs)
+    | s == "" = Left ("Invalid name field: " ++ B8.unpack bs)
     | otherwise = Right s
     where s = B8.unpack bs
 
@@ -178,7 +178,7 @@ parseSuit bs
     | bs == B8.pack "Cups"     = Right Cups
     | bs == B8.pack "Batons"   = Right Batons
     | bs == B8.pack "Coins"    = Right Coins
-    | otherwise                = Left ("Invalid suit:" ++ B8.unpack bs)
+    | otherwise                = Left ("Invalid suit field: " ++ B8.unpack bs)
 
 -- Parse Rank field
 parseRank :: B8.ByteString -> Either String Rank
@@ -196,7 +196,7 @@ parseRank bs
     | bs == B8.pack "Jack"  = Right Jack
     | bs == B8.pack "Queen" = Right Queen
     | bs == B8.pack "King"  = Right King
-    | otherwise             = Left ("Invalid suit:" ++ B8.unpack bs)
+    | otherwise             = Left ("Invalid rank field: " ++ B8.unpack bs)
     -- TODO: Refactor using `reads`
 
 {-
